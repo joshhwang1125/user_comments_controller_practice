@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id         :integer          not null, primary key
+#  email      :string
+#  created_at :datetime
+#  updated_at :datetime
+#  username   :string
+#
+
 class UsersController < ApplicationController
     def index
       render json: User.all

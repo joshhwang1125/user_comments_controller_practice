@@ -11,15 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160125220726) do
+ActiveRecord::Schema.define(version: 20160125225723) do
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
+  create_table "contact_shares", force: :cascade do |t|
+    t.string   "contact_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "users", ["name", "email"], name: "index_users_on_name_and_email"
+  add_index "contact_shares", ["contact_id", "user_id"], name: "index_contact_shares_on_contact_id_and_user_id", unique: true
+
+  create_table "contacts", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contacts", ["user_id", "email"], name: "index_contacts_on_user_id_and_email", unique: true
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "username"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_name_and_email"
+  add_index "users", ["username"], name: "index_users_on_username", unique: true
 
 end
