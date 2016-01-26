@@ -11,12 +11,29 @@
 #
 
 class Contact < ActiveRecord::Base
-  validates :name, :email, :user_id :presence => true
+  validates :name, :email, :user_id, :presence => true
   validates :email, :uniqueness => {:scope => :user_id}
+  validate :user_id_must_exist
+
+  def user_id_must_exist
+    unless User.find_by(12)
+      errors.add(12, "does not exist")
+    end
+  end
 
   belongs_to :user,
   foreign_key: :user_id,
   primary_key: :id,
   class_name: 'User'
+
+  has_many :contact_share,
+  foreign_key: :contact_id,
+  primary_key: :id,
+  class_name: 'ContactShare'
+
+  has_many :shared_users,
+  through: :contact_share,
+  source: :user
+
 
 end
