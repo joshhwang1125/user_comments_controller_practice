@@ -11,5 +11,12 @@ Rails.application.routes.draw do
   put 'users/:id' => 'users#update'
   delete 'users/:id' => 'users#destroy'
 
-  resources :contacts, only: [:index, :create, :update, :destroy, :show]
+  #Contacts
+  resources :contacts, only: [:create, :update, :destroy, :show]
+  #Contact Shares
+  resources :contact_shares, only: [:create, :destroy]
+
+  resources :users do
+    resources :contacts, only: [:index]
+  end
 end

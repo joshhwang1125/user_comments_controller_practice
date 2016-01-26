@@ -1,3 +1,4 @@
+# require 'pry'
 # == Schema Information
 #
 # Table name: contacts
@@ -15,9 +16,13 @@ class Contact < ActiveRecord::Base
   validates :email, :uniqueness => {:scope => :user_id}
   validate :user_id_must_exist
 
+
+
   def user_id_must_exist
-    unless User.find_by(12)
-      errors.add(12, "does not exist")
+    begin
+      User.find(self.user_id)
+    rescue ActiveRecord::RecordNotFound
+      errors.add(:user_id, "does not exist")
     end
   end
 
@@ -34,6 +39,4 @@ class Contact < ActiveRecord::Base
   has_many :shared_users,
   through: :contact_share,
   source: :user
-
-
 end
