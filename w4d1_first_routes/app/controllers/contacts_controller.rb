@@ -1,7 +1,21 @@
+# == Schema Information
+#
+# Table name: contacts
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  email      :string
+#  user_id    :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class ContactsController < ApplicationController
     def index
-      render json: [User.find(params[:user_id]).contacts,
-      User.find(params[:user_id]).shared_contacts]
+      user_contacts = User.find(params[:user_id]).contacts
+      shared_contacts = User.find(params[:user_id]).shared_contacts
+      render json: [user_contacts, shared_contacts]
+
     end
 
     def show

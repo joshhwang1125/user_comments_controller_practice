@@ -3,7 +3,6 @@
 # Table name: users
 #
 #  id         :integer          not null, primary key
-#  email      :string
 #  created_at :datetime
 #  updated_at :datetime
 #  username   :string
@@ -20,5 +19,7 @@ class User < ActiveRecord::Base
   has_many :shared_contacts,
   through: :contact_shares,
   source: :contact
+
+  has_many :comments, as: commentable
 
 end
